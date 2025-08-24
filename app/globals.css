@@ -8,6 +8,14 @@
   --muted: #94a3b8;
   --brand: #e11d48; /* Red/crimson accent color - gives gym energy */
 }
+
+/* Fix for Lucide icons */
+svg.lucide {
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 html, body {
   height: 100%;
   background: var(--bg);

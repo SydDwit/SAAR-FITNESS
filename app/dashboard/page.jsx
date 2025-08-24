@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Icon from "@/app/components/Icon";
 
 export default function Dashboard() {
   const [q,setQ] = useState("");
@@ -40,12 +41,17 @@ export default function Dashboard() {
       <div className="card p-6 shadow-xl">
         <div className="flex flex-wrap gap-4 items-center mb-6">
           <div className="flex-1 relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-zinc-500" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <input className="input pl-10" placeholder="Search by name..." value={q} onChange={e=>setQ(e.target.value)}/>
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+              <Icon name="search" className="text-zinc-500 w-5 h-5" />
+            </span>
+            <input 
+              className="input pl-9"
+              name="search"
+              autoComplete="off"
+              placeholder="Search by name..." 
+              value={q} 
+              onChange={e=>setQ(e.target.value)}
+            />
           </div>
           <select className="select max-w-[180px]" value={sort} onChange={e=>setSort(e.target.value)}>
             <option value="name">Sort: Name</option>
