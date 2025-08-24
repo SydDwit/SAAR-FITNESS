@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #030303; /* Very dark, almost black background */
+  --surface: #0a0a0a; /* Darker surface */
+  --muted: #94a3b8;
+  --brand: #e11d48; /* Red/crimson accent color - gives gym energy */
+}
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: #e5e7eb;
+}
+.container {
+  @apply max-w-6xl mx-auto px-4;
+}
+.card {
+  @apply bg-[color:var(--surface)] rounded-2xl shadow-xl border border-zinc-900;
+}
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium border border-transparent bg-[color:var(--brand)] text-white hover:brightness-110 transition shadow-lg shadow-red-900/30;
+}
+.input {
+  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-2 outline-none focus:ring-2 focus:ring-rose-500/50;
+}
+.select {
+  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-2 outline-none focus:ring-2 focus:ring-rose-500/50;
+}
+.label {
+  @apply text-sm text-slate-300;
+}
+.table {
+  @apply w-full text-sm;
+}
+.table th, .table td {
+  @apply px-3 py-2 border-b border-zinc-800;
+}
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs border border-zinc-700;
+}
+.nav-link {
+  @apply text-slate-300 hover:text-rose-500 transition-colors font-medium px-3 py-1 rounded;
+}
