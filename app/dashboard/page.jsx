@@ -42,15 +42,16 @@ export default function Dashboard() {
         <div className="flex flex-wrap gap-4 items-center mb-6">
           <div className="flex-1 relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-              <Icon name="search" className="text-zinc-500 w-5 h-5" />
+              <Icon name="search" className="text-zinc-500 w-4 h-4" />
             </span>
             <input 
-              className="input pl-9"
+              className="input pl-16 placeholder-indent"
               name="search"
               autoComplete="off"
               placeholder="Search by name..." 
               value={q} 
               onChange={e=>setQ(e.target.value)}
+              style={{ textIndent: "20px" }}
             />
           </div>
           <select className="select max-w-[180px]" value={sort} onChange={e=>setSort(e.target.value)}>

@@ -39,15 +39,16 @@ export default function StaffAdmin(){
                 <label className="block text-zinc-400 text-sm mb-2">Name</label>
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                    <Icon name="user" className="text-zinc-500 w-5 h-5" />
+                    <Icon name="user" className="text-zinc-500 w-4 h-4" />
                   </span>
                   <input 
-                    className="input pl-9"
+                    className="input pl-16 placeholder-indent"
                     name="name"
                     autoComplete="off"
                     placeholder="Full Name" 
                     value={form.name} 
                     onChange={e=>setForm({...form, name:e.target.value})}
+                    style={{ textIndent: "20px" }}
                   />
                 </div>
               </div>
@@ -56,15 +57,16 @@ export default function StaffAdmin(){
                 <label className="block text-zinc-400 text-sm mb-2">Email</label>
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                    <Icon name="mail" className="text-zinc-500 w-5 h-5" />
+                    <Icon name="mail" className="text-zinc-500 w-4 h-4" />
                   </span>
                   <input 
-                    className="input pl-9"
+                    className="input pl-16 placeholder-indent"
                     name="email"
                     autoComplete="email"
                     placeholder="staff@example.com" 
                     value={form.email} 
                     onChange={e=>setForm({...form, email:e.target.value})}
+                    style={{ textIndent: "20px" }}
                   />
                 </div>
               </div>
@@ -73,16 +75,17 @@ export default function StaffAdmin(){
                 <label className="block text-zinc-400 text-sm mb-2">Password</label>
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                    <Icon name="lock" className="text-zinc-500 w-5 h-5" />
+                    <Icon name="lock" className="text-zinc-500 w-4 h-4" />
                   </span>
                   <input 
-                    className="input pl-9"
+                    className="input pl-16 placeholder-indent"
                     name="password"
                     autoComplete="new-password"
                     placeholder="Secure Password" 
                     type="password" 
                     value={form.password} 
                     onChange={e=>setForm({...form, password:e.target.value})}
+                    style={{ textIndent: "20px" }}
                   />
                 </div>
               </div>
@@ -91,15 +94,16 @@ export default function StaffAdmin(){
                 <label className="block text-zinc-400 text-sm mb-2">Notification Email (optional)</label>
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                    <Icon name="bell" className="text-zinc-500 w-5 h-5" />
+                    <Icon name="bell" className="text-zinc-500 w-4 h-4" />
                   </span>
                   <input 
-                    className="input pl-9"
+                    className="input pl-16 placeholder-indent"
                     name="notifyEmail"
                     autoComplete="off" 
                     placeholder="notifications@example.com" 
                     value={form.notifyEmail} 
                     onChange={e=>setForm({...form, notifyEmail:e.target.value})}
+                    style={{ textIndent: "20px" }}
                   />
                 </div>
               </div>

@@ -31,13 +31,13 @@ html, body {
   @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium border border-transparent bg-[color:var(--brand)] text-white hover:brightness-110 transition shadow-lg shadow-red-900/30;
 }
 .input {
-  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-2 outline-none focus:ring-2 focus:ring-rose-500/50;
+  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200 hover:border-zinc-700;
 }
 .select {
-  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-2 outline-none focus:ring-2 focus:ring-rose-500/50;
+  @apply w-full rounded-xl bg-zinc-900 border border-zinc-800 px-4 py-3 outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200 hover:border-zinc-700;
 }
 .label {
-  @apply text-sm text-slate-300;
+  @apply text-sm text-slate-300 font-medium mb-1.5 block;
 }
 .table {
   @apply w-full text-sm;
@@ -50,4 +50,73 @@ html, body {
 }
 .nav-link {
   @apply text-slate-300 hover:text-rose-500 transition-colors font-medium px-3 py-1 rounded;
+}
+
+.input { @apply appearance-none; }
+
+/* Hide Edge/IE clear/reveal */
+input::-ms-reveal,
+input::-ms-clear { display:none; }
+
+/* Hide Chromium credentials buttons */
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-contact-auto-fill-button {
+  visibility:hidden; display:none; pointer-events:none;
+}
+
+/* Neutralize autofill paint */
+input:-webkit-autofill {
+  -webkit-text-fill-color:#e5e7eb !important;
+  box-shadow:0 0 0 1000px #0b0f14 inset !important;
+}
+
+/* Remove any background icons */
+input { background-image:none !important; }
+
+/* Add spacing for placeholder text */
+.placeholder-indent::placeholder {
+  padding-left: 4px;
+  letter-spacing: 0.01em;
+  opacity: 0.6;
+}
+
+/* Ensure text in inputs also has proper spacing */
+.placeholder-indent {
+  letter-spacing: 0.01em;
+}
+
+/* Improved styling for form fields */
+.input, .select {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.input:focus, .select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.2), 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* File input styling */
+input[type="file"] {
+  position: relative;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #27272a;
+  color: #e4e4e7;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #3f3f46;
+}
+
+/* Login page specific styles */
+.login-bg {
+  background-image: url('/images/login.jpg');
+  background-size: cover;
+  background-position: center;
 }

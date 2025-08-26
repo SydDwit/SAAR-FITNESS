@@ -1,25 +1,25 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/app/components/Icon";
 
-export default function Login() {
+export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [imageError, setImageError] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
   
-  // Redirect if already authenticated
+  // Only redirect if already authenticated as admin
   useEffect(() => {
-    if (session && status === "authenticated") {
-      // Staff only goes to dashboard
-      router.replace("/dashboard");
+    if (session && status === "authenticated" && session.user.role === "admin") {
+      router.replace("/admin");
+      // Do not redirect staff users - allow them to login as admin
     }
   }, [session, status, router]);
+
   // Show loading state while checking session
   if (status === "loading") {
     return (
@@ -34,31 +34,43 @@ export default function Login() {
   
   return (
     <div className="min-h-screen grid md:grid-cols-2 gap-0">
-      {/* Left side - Background Image with Brand */}
+      {/* Left side - Background with Admin Brand */}
       <div className="hidden md:block relative overflow-hidden">
-        {/* Dark gradient overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/70 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-black z-10"></div>
         
-        {/* Background image div with our custom class */}
-        <div className="absolute inset-0 login-bg"></div>
+        {/* Add visual elements to make the admin login look distinct */}
+        <div className="absolute inset-0">
+          <div className="absolute top-[10%] left-[10%] w-32 h-32 rounded-full bg-rose-800/20 blur-3xl"></div>
+          <div className="absolute top-[40%] right-[15%] w-40 h-40 rounded-full bg-rose-900/20 blur-3xl"></div>
+          <div className="absolute bottom-[20%] left-[20%] w-36 h-36 rounded-full bg-rose-700/20 blur-3xl"></div>
+        </div>
+        
         <div className="absolute inset-0 flex items-center justify-center z-20">
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white tracking-wider">SAAR FITNESS</h1>
-            <p className="mt-2 text-slate-300 text-lg">Your Life Is Your Making</p>
+            <div className="inline-block p-3 bg-rose-600/10 rounded-xl mb-4 border border-rose-600/20">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h1 className="text-5xl font-bold text-white tracking-wider">ADMIN PANEL</h1>
+            <p className="mt-2 text-slate-300 text-lg">SAAR FITNESS Management</p>
           </div>
         </div>
       </div>
       
-      {/* Right side - Login Form */}
+      {/* Right side - Admin Login Form */}
       <div className="flex items-center justify-center p-8 bg-black">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center md:text-left">
-            <h2 className="text-2xl font-bold text-white">STAFF SIGN IN</h2>
-            <p className="mt-2 text-slate-400">Please enter your staff credentials below</p>
+            <h2 className="text-2xl font-bold text-rose-500">ADMIN ACCESS</h2>
+            <p className="mt-2 text-slate-400">Please enter your administrator credentials</p>
+            {session && status === "authenticated" && session.user.role !== "admin" && (
+              <p className="mt-2 text-amber-500 text-sm">Note: You are currently logged in as staff. Logging in as admin will sign you out of your staff account.</p>
+            )}
           </div>
 
           <div className="mt-8 space-y-6">
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="relative">
                 <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                   <Icon name="mail" className="text-rose-500 w-4 h-4" />
@@ -68,15 +80,13 @@ export default function Login() {
                   name="email"
                   autoComplete="username" 
                   className="bg-zinc-900 border border-zinc-800 pl-16 pr-4 py-3 rounded-md w-full text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-indent" 
-                  placeholder="Email"
+                  placeholder="Admin Email"
                   value={email} 
                   onChange={e=>setEmail(e.target.value)}
                   style={{ textIndent: "20px" }}
                 />
               </div>
-            </div>
-
-            <div className="space-y-2">
+            
               <div className="relative">
                 <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                   <Icon name="lock" className="text-rose-500 w-4 h-4" />
@@ -86,7 +96,7 @@ export default function Login() {
                   name="password"
                   autoComplete="current-password" 
                   className="bg-zinc-900 border border-zinc-800 pl-16 pr-4 py-3 rounded-md w-full text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-indent" 
-                  placeholder="Password"
+                  placeholder="Admin Password"
                   value={password} 
                   onChange={e=>setPassword(e.target.value)}
                   style={{ textIndent: "20px" }}
@@ -94,15 +104,9 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <button type="button" className="text-rose-500 hover:text-rose-400">Forgot Password?</button>
-              </div>
-            </div>
-
             <div>
               {error && (
-                <div className="bg-rose-500/10 border border-rose-500 text-rose-300 px-4 py-2 rounded-md mb-4">
+                <div className="bg-rose-500/10 border border-rose-500 text-rose-300 px-4 py-3 rounded-md mb-4">
                   {error}
                 </div>
               )}
@@ -117,17 +121,37 @@ export default function Login() {
                   }
                   setLoading(true);
                   try {
-                    const res = await signIn("credentials", {
-                      email,
-                      password,
-                      role: "staff", // Force staff role
-                      redirect: false
-                    });
-                    
-                    if (res?.error) {
-                      setError("Invalid login credentials");
-                    } else if (res?.url) {
-                      // Redirect handled by the useEffect
+                    // Sign out first if already logged in as staff
+                    if (session && session.user.role !== "admin") {
+                      await signOut({ redirect: false });
+                      
+                      // Then login as admin
+                      const adminRes = await signIn("credentials", {
+                        email,
+                        password,
+                        role: "admin", // Force admin role
+                        redirect: false
+                      });
+                      
+                      if (adminRes?.error) {
+                        setError("Invalid administrator credentials");
+                      } else {
+                        // After successful login, redirect to admin page
+                        router.replace("/admin");
+                      }
+                    } else {
+                      const res = await signIn("credentials", {
+                        email,
+                        password,
+                        role: "admin", // Force admin role
+                        redirect: false
+                      });
+                      
+                      if (res?.error) {
+                        setError("Invalid administrator credentials");
+                      } else if (res?.url) {
+                        router.replace("/admin");
+                      }
                     }
                   } catch (err) {
                     setError("An error occurred during sign in");
@@ -136,12 +160,12 @@ export default function Login() {
                   setLoading(false);
                 }}
               >
-                {loading ? "Signing in..." : "SIGN IN"}
+                {loading ? "Signing in..." : "ACCESS ADMIN PANEL"}
               </button>
             </div>
             <div className="mt-6 text-center">
-              <p className="text-slate-400 text-sm">Use /api/seed to create a default admin.</p>
-              <p className="text-slate-400 text-sm mt-2">Admin? <a href="/admin/login" className="text-rose-500 hover:text-rose-400 underline">Login here</a> instead.</p>
+              <p className="text-slate-400 text-sm">Use /api/seed to create a default admin if needed.</p>
+              <p className="text-slate-400 text-sm mt-2">Staff? <a href="/login" className="text-rose-500 hover:text-rose-400 underline">Login here</a> instead.</p>
             </div>
           </div>
         </div>
