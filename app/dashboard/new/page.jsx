@@ -14,6 +14,7 @@ export default function NewMember() {
     weightKg: "",
     subscriptionMonths: "1",
     startDate: new Date().toISOString().slice(0, 10),
+    paymentStatus: "paid",
   });
   const [bmi, setBmi] = useState(0);
   const [file, setFile] = useState(null);
@@ -335,6 +336,28 @@ export default function NewMember() {
               onChange={(e) => setForm({ ...form, startDate: e.target.value })}
               style={{ textIndent: "20px" }}
             />
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label className="label">Payment Status</label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-zinc-500 w-4 h-4" viewBox="0 0 16 16">
+                <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542s.987-.254 1.194-.542C9.42 6.644 9.5 6.253 9.5 6a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                <path d="M16 6.5h-5.551a2.7 2.7 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5s-1.613-.412-2.006-.958A2.7 2.7 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+              </svg>
+            </span>
+            <select
+              className="select pl-16"
+              value={form.paymentStatus}
+              onChange={(e) => setForm({ ...form, paymentStatus: e.target.value })}
+              style={{ textIndent: "20px" }}
+            >
+              <option value="paid">Paid</option>
+              <option value="due">Due</option>
+              <option value="partial">Partial Payment</option>
+            </select>
           </div>
         </div>
       </div>

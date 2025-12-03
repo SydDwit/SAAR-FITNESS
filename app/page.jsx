@@ -16,7 +16,7 @@ export default function Home() {
       {/* Home Section */}
       <section 
         ref={homeRef} 
-        className="min-h-screen flex items-center justify-center" 
+        className="min-h-screen flex items-center justify-center pt-16" 
         id="home"
         style={{
           backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/background.jpg')",
@@ -27,7 +27,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="max-w-xl">
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-white">Your Life Is Your Making</h1>
-            <p className="mb-8 text-lg text-slate-300">Simple membership management for staff. Track subscriptions. Capture member photos. Search and sort. Admin controls for staff and members.</p>
+            <p className="mb-8 text-lg text-slate-300">Simple membership management for trainers. Track subscriptions. Capture member photos. Search and sort. Admin controls for trainers and members.</p>
             <div className="flex gap-4">
               <Link href="/dashboard" className="btn bg-rose-600 text-white shadow-lg shadow-rose-700/30">Enter</Link>
               <Link href="#" className="btn bg-slate-800 hover:bg-slate-700 text-white shadow-lg shadow-slate-900/20">Docs</Link>
@@ -48,7 +48,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">About Us</h2>
-            <p className="text-xl text-slate-300 mb-8">SAAR FITNESS is dedicated to providing a simple and effective solution for gym membership management. Our platform helps staff and admins track subscriptions, manage member data, and streamline operations for a better fitness experience.</p>
+            <p className="text-xl text-slate-300 mb-8">SAAR FITNESS is dedicated to providing a simple and effective solution for gym membership management. Our platform helps trainers and admins track subscriptions, manage member data, and streamline operations for a better fitness experience.</p>
             <div className="grid md:grid-cols-3 gap-8 mt-16">
               <div className="card p-6 text-center">
                 <div className="w-16 h-16 bg-rose-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-rose-700/30">

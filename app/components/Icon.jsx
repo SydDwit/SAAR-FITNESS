@@ -7,7 +7,20 @@ import {
   faLock,
   faBell,
   faSearch,
-  faChevronDown
+  faChevronDown,
+  faPlus,
+  faTableCells,
+  faUsers,
+  faBriefcase,
+  faChartBar,
+  faGear,
+  faRightFromBracket,
+  faChevronLeft,
+  faChevronRight,
+  faBars,
+  faUserPlus,
+  faCalendar,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add all icons to the library
@@ -17,7 +30,20 @@ library.add(
   faLock,
   faBell,
   faSearch,
-  faChevronDown
+  faChevronDown,
+  faPlus,
+  faTableCells,
+  faUsers,
+  faBriefcase,
+  faChartBar,
+  faGear,
+  faRightFromBracket,
+  faChevronLeft,
+  faChevronRight,
+  faBars,
+  faUserPlus,
+  faCalendar,
+  faXmark
 );
 
 // Map of icon names to FontAwesome icons
@@ -29,7 +55,20 @@ const iconMap = {
   bell: faBell,
   notification: faBell,
   search: faSearch,
-  chevronDown: faChevronDown
+  chevronDown: faChevronDown,
+  plus: faPlus,
+  grid: faTableCells,
+  users: faUsers,
+  briefcase: faBriefcase,
+  'bar-chart-2': faChartBar,
+  settings: faGear,
+  'log-out': faRightFromBracket,
+  'chevron-left': faChevronLeft,
+  'chevron-right': faChevronRight,
+  menu: faBars,
+  'user-plus': faUserPlus,
+  calendar: faCalendar,
+  x: faXmark
 };
 
 export default function Icon({ name, className = "", size = "lg", ...props }) {

@@ -13,12 +13,13 @@ export default function Login() {
   const { data: session, status } = useSession();
   const router = useRouter();
   
-  // Redirect if already authenticated
+  // Only redirect if authenticated as staff
   useEffect(() => {
-    if (session && status === "authenticated") {
+    if (session && status === "authenticated" && session.user.role === "staff") {
       // Staff only goes to dashboard
       router.replace("/dashboard");
     }
+    // Don't redirect if user is admin
   }, [session, status, router]);
   // Show loading state while checking session
   if (status === "loading") {
@@ -53,8 +54,8 @@ export default function Login() {
       <div className="flex items-center justify-center p-8 bg-black">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center md:text-left">
-            <h2 className="text-2xl font-bold text-white">STAFF SIGN IN</h2>
-            <p className="mt-2 text-slate-400">Please enter your staff credentials below</p>
+            <h2 className="text-2xl font-bold text-white">TRAINER SIGN IN</h2>
+            <p className="mt-2 text-slate-400">Please enter your trainer credentials below</p>
           </div>
 
           <div className="mt-8 space-y-6">
@@ -117,17 +118,21 @@ export default function Login() {
                   }
                   setLoading(true);
                   try {
+                    console.log("Attempting staff login...");
                     const res = await signIn("credentials", {
                       email,
                       password,
-                      role: "staff", // Force staff role
-                      redirect: false
+                      role: "staff", // Specify staff role
+                      redirect: false,
+                      callbackUrl: "/dashboard" // Explicitly set the callback URL
                     });
                     
+                    console.log("Staff login result:", res);
                     if (res?.error) {
                       setError("Invalid login credentials");
-                    } else if (res?.url) {
-                      // Redirect handled by the useEffect
+                    } else {
+                      // Force redirect to staff dashboard regardless of user's previous role
+                      router.push("/dashboard");
                     }
                   } catch (err) {
                     setError("An error occurred during sign in");

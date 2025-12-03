@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/app/components/Icon";
@@ -18,6 +18,7 @@ export default function AdminLogin() {
       router.replace("/admin");
       // Do not redirect staff users - allow them to login as admin
     }
+    // Staff users can stay on this page to log in as admin
   }, [session, status, router]);
 
   // Show loading state while checking session
@@ -64,9 +65,6 @@ export default function AdminLogin() {
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold text-rose-500">ADMIN ACCESS</h2>
             <p className="mt-2 text-slate-400">Please enter your administrator credentials</p>
-            {session && status === "authenticated" && session.user.role !== "admin" && (
-              <p className="mt-2 text-amber-500 text-sm">Note: You are currently logged in as staff. Logging in as admin will sign you out of your staff account.</p>
-            )}
           </div>
 
           <div className="mt-8 space-y-6">
@@ -121,37 +119,21 @@ export default function AdminLogin() {
                   }
                   setLoading(true);
                   try {
-                    // Sign out first if already logged in as staff
-                    if (session && session.user.role !== "admin") {
-                      await signOut({ redirect: false });
-                      
-                      // Then login as admin
-                      const adminRes = await signIn("credentials", {
-                        email,
-                        password,
-                        role: "admin", // Force admin role
-                        redirect: false
-                      });
-                      
-                      if (adminRes?.error) {
-                        setError("Invalid administrator credentials");
-                      } else {
-                        // After successful login, redirect to admin page
-                        router.replace("/admin");
-                      }
+                    console.log("Attempting admin login...");
+                    const adminRes = await signIn("credentials", {
+                      email,
+                      password,
+                      role: "admin", // Specify admin role
+                      redirect: false,
+                      callbackUrl: "/admin" // Explicitly set the callback URL
+                    });
+                    console.log("Admin login result:", adminRes);
+                    
+                    if (adminRes?.error) {
+                      setError("Invalid administrator credentials");
                     } else {
-                      const res = await signIn("credentials", {
-                        email,
-                        password,
-                        role: "admin", // Force admin role
-                        redirect: false
-                      });
-                      
-                      if (res?.error) {
-                        setError("Invalid administrator credentials");
-                      } else if (res?.url) {
-                        router.replace("/admin");
-                      }
+                      // Force redirect to admin page
+                      router.replace("/admin");
                     }
                   } catch (err) {
                     setError("An error occurred during sign in");
@@ -165,7 +147,7 @@ export default function AdminLogin() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-slate-400 text-sm">Use /api/seed to create a default admin if needed.</p>
-              <p className="text-slate-400 text-sm mt-2">Staff? <a href="/login" className="text-rose-500 hover:text-rose-400 underline">Login here</a> instead.</p>
+              <p className="text-slate-400 text-sm mt-2">Trainer? <a href="/login" className="text-rose-500 hover:text-rose-400 underline">Login here</a> instead.</p>
             </div>
           </div>
         </div>

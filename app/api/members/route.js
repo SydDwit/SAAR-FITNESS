@@ -1,10 +1,12 @@
 import { Member } from "@/lib/models";
+import { memberConn } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { writeFile } from "fs/promises";
 import path from "path";
 
 export async function GET(req) {
+  await memberConn;
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q") || "";
   const sort = searchParams.get("sort") || "name";
@@ -42,14 +44,52 @@ export async function POST(req) {
       photoUrl = `/uploads/${filename}`;
     }
 
+    const paymentStatus = form.get("paymentStatus") || "due";
+
     const saved = await Member.create({
       name, age, gender, planType, heightCm, weightKg, bmi, subscriptionMonths, startDate, endDate, status: "active",
+      paymentStatus,
       photoUrl
     });
 
     return Response.json({ ok: true, id: saved._id });
   } catch (e) {
     console.error(e);
+    return Response.json({ ok:false, error: e.message }, { status: 500 });
+  }
+}
+
+export async function PATCH(req){
+  await memberConn;
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  if (!id) return Response.json({ ok:false, error:"missing id" }, { status: 400 });
+  
+  try {
+    const body = await req.json();
+    console.log('PATCH request body:', body);
+    const updateData = {};
+    
+    if (body.paymentStatus) {
+      updateData.paymentStatus = body.paymentStatus;
+    }
+    
+    console.log('Updating member', id, 'with data:', updateData);
+    const updated = await Member.findByIdAndUpdate(
+      id, 
+      { $set: updateData }, 
+      { new: true, runValidators: true }
+    );
+    console.log('Updated member:', JSON.stringify(updated, null, 2));
+    console.log('Updated member paymentStatus specifically:', updated?.paymentStatus);
+    
+    if (!updated) {
+      return Response.json({ ok:false, error:"Member not found" }, { status: 404 });
+    }
+    
+    return Response.json({ ok:true, member: updated });
+  } catch (e) {
+    console.error('PATCH error:', e);
     return Response.json({ ok:false, error: e.message }, { status: 500 });
   }
 }

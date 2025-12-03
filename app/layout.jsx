@@ -1,6 +1,6 @@
 import "./globals.css";
 import AuthProvider from "./components/AuthProvider";
-import NavBar from "./components/NavBar";
+import ClientLayout from "./components/ClientLayout";
 import "./utils/fontAwesomeConfig";
 
 export const metadata = {
@@ -11,10 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className="min-h-screen bg-black text-white">
         <AuthProvider>
-          <NavBar />
-          <main className="pt-16">{children}</main>
+          <ClientLayout>{children}</ClientLayout>
         </AuthProvider>
       </body>
     </html>

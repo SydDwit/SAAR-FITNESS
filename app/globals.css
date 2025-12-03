@@ -120,3 +120,14 @@ input[type="file"]::file-selector-button:hover {
   background-size: cover;
   background-position: center;
 }
+
+/* Sidebar layout adjustments */
+@media (min-width: 768px) {
+  .sidebar-layout {
+    margin-left: 16rem; /* 64px, matches the width of our expanded sidebar */
+  }
+  
+  .sidebar-layout-collapsed {
+    margin-left: 5rem; /* 20px, matches the width of our collapsed sidebar */
+  }
+}
