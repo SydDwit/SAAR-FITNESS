@@ -16,8 +16,8 @@ export default function PublicNavBar() {
   // Don't show public navbar on protected pages
   if (isProtectedPage) return null;
 
-  // Determine the correct dashboard link based on role
-  const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
+  // All authenticated users go to admin dashboard
+  const dashboardLink = "/admin";
   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-zinc-900">

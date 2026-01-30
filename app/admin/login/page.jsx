@@ -35,26 +35,19 @@ export default function AdminLogin() {
   
   return (
     <div className="min-h-screen grid md:grid-cols-2 gap-0">
-      {/* Left side - Background with Admin Brand */}
-      <div className="hidden md:block relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-black z-10"></div>
+      {/* Left side - Hero with Background Image */}
+      <div 
+        className="hidden md:block relative overflow-hidden bg-login-hero bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/login.jpg')" }}
+      >
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-black/60 z-10"></div>
         
-        {/* Add visual elements to make the admin login look distinct */}
-        <div className="absolute inset-0">
-          <div className="absolute top-[10%] left-[10%] w-32 h-32 rounded-full bg-rose-800/20 blur-3xl"></div>
-          <div className="absolute top-[40%] right-[15%] w-40 h-40 rounded-full bg-rose-900/20 blur-3xl"></div>
-          <div className="absolute bottom-[20%] left-[20%] w-36 h-36 rounded-full bg-rose-700/20 blur-3xl"></div>
-        </div>
-        
+        {/* Text Content */}
         <div className="absolute inset-0 flex items-center justify-center z-20">
           <div className="text-center">
-            <div className="inline-block p-3 bg-rose-600/10 rounded-xl mb-4 border border-rose-600/20">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <h1 className="text-5xl font-bold text-white tracking-wider">ADMIN PANEL</h1>
-            <p className="mt-2 text-slate-300 text-lg">SAAR FITNESS Management</p>
+            <h1 className="text-5xl font-bold text-white drop-shadow-2xl">SAAR FITNESS</h1>
+            <p className="text-lg text-gray-300 mt-4 drop-shadow-xl">Your Life Is Your Making</p>
           </div>
         </div>
       </div>
@@ -147,7 +140,6 @@ export default function AdminLogin() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-slate-400 text-sm">Use /api/seed to create a default admin if needed.</p>
-              <p className="text-slate-400 text-sm mt-2">Trainer? <a href="/login" className="text-rose-500 hover:text-rose-400 underline">Login here</a> instead.</p>
             </div>
           </div>
         </div>

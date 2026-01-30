@@ -18,9 +18,9 @@ export default function NavBar() {
   // Don't show sidebar on public pages
   if (!isProtectedPage) return null;
 
-  // Determine the correct dashboard link based on role
-  const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
-  const isAdmin = session?.user?.role === "admin";
+  // All authenticated users are admins
+  const dashboardLink = "/admin";
+  const isAdmin = true;
 
   // Determine if a link is active
   const isActive = (path) => {
@@ -28,21 +28,14 @@ export default function NavBar() {
     return pathname?.startsWith(path) && path !== dashboardLink;
   };
 
-  // Navigation items based on role
-  const navItems = isAdmin 
-    ? [
-        { name: "Dashboard", path: "/admin", icon: "grid" },
-        { name: "Members", path: "/admin/members", icon: "users" },
-        { name: "Trainers", path: "/admin/staff", icon: "briefcase" },
-        { name: "Reports", path: "/admin/reports", icon: "bar-chart-2" },
-        { name: "Settings", path: "/admin/settings", icon: "settings" }
-      ]
-    : [
-        { name: "Dashboard", path: "/dashboard", icon: "grid" },
-        { name: "New Member", path: "/dashboard/new", icon: "user-plus" },
-        { name: "Calendar", path: "/dashboard/calendar", icon: "calendar" },
-        { name: "Reports", path: "/dashboard/reports", icon: "bar-chart-2" }
-      ];
+  // Navigation items for admin
+  const navItems = [
+    { name: "Dashboard", path: "/admin", icon: "grid" },
+    { name: "Members", path: "/admin/members", icon: "users" },
+    { name: "Trainers", path: "/admin/staff", icon: "briefcase" },
+    { name: "Reports", path: "/admin/reports", icon: "bar-chart-2" },
+    { name: "Settings", path: "/admin/settings", icon: "settings" }
+  ];
   
   // Mobile sidebar overlay
   const MobileSidebar = () => (
@@ -146,7 +139,7 @@ export default function NavBar() {
                     {session.user.name || session.user.email.split('@')[0]}
                   </p>
                   <p className="text-xs text-zinc-500 truncate">
-                    {isAdmin ? "Administrator" : "Trainer"}
+                    Administrator
                   </p>
                 </div>
               )}

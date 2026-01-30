@@ -2,12 +2,20 @@
 import { NavBarProvider } from "./NavBarContext";
 import NavBar from "./NavBar";
 import PublicNavBar from "./PublicNavBar";
+import { usePathname } from "next/navigation";
 
 export default function ClientLayout({ children }) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/admin/login";
+
   return (
     <NavBarProvider>
-      <NavBar />
-      <PublicNavBar />
+      {!isLoginPage && (
+        <>
+          <NavBar />
+          <PublicNavBar />
+        </>
+      )}
       <main>{children}</main>
     </NavBarProvider>
   );
