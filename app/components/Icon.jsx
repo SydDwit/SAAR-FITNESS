@@ -20,7 +20,18 @@ import {
   faBars,
   faUserPlus,
   faCalendar,
-  faXmark
+  faXmark,
+  faEye,
+  faPenToSquare,
+  faTrashCan,
+  faCheck,
+  faExclamationTriangle,
+  faDownload,
+  faFileExport,
+  faFilter,
+  faCamera,
+  faArrowLeft,
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add all icons to the library
@@ -43,7 +54,18 @@ library.add(
   faBars,
   faUserPlus,
   faCalendar,
-  faXmark
+  faXmark,
+  faEye,
+  faPenToSquare,
+  faTrashCan,
+  faCheck,
+  faExclamationTriangle,
+  faDownload,
+  faFileExport,
+  faFilter,
+  faCamera,
+  faArrowLeft,
+  faCheckCircle
 );
 
 // Map of icon names to FontAwesome icons
@@ -68,7 +90,18 @@ const iconMap = {
   menu: faBars,
   'user-plus': faUserPlus,
   calendar: faCalendar,
-  x: faXmark
+  x: faXmark,
+  eye: faEye,
+  'pen-to-square': faPenToSquare,
+  'trash-can': faTrashCan,
+  check: faCheck,
+  'exclamation-triangle': faExclamationTriangle,
+  download: faDownload,
+  'file-export': faFileExport,
+  filter: faFilter,
+  camera: faCamera,
+  'arrow-left': faArrowLeft,
+  'check-circle': faCheckCircle
 };
 
 export default function Icon({ name, className = "", size = "lg", ...props }) {

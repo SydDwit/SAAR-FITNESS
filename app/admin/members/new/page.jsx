@@ -145,36 +145,37 @@ export default function NewMemberAdmin() {
   }
 
   return (
-    <PageContainer className="min-h-screen p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+    <PageContainer className="min-h-screen p-6">
+      <div className="max-w-5xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Add New Member</h1>
-            <p className="text-zinc-400">Fill in the member details below</p>
+            <h1 className="text-2xl font-bold text-white mb-1">Add New Member</h1>
+            <p className="text-sm text-zinc-400">Fill in the member details below</p>
           </div>
           <button
             type="button"
             onClick={() => router.push("/admin/members")}
-            className="btn bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center gap-2 whitespace-nowrap"
+            className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
           >
             <Icon name="arrow-left" className="w-4 h-4" />
             Back to Members
           </button>
         </div>
 
-        <form onSubmit={submit} className="space-y-6">
+        <form onSubmit={submit} className="space-y-5">
           {/* Personal Information Section */}
-          <div className="card p-6 md:p-8">
-            <h2 className="text-xl font-semibold text-white mb-6 pb-3 border-b border-zinc-800">
+          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Icon name="user" className="w-5 h-5 text-purple-400" />
               Personal Information
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Name *</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Name *</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   required
                   placeholder="Full Name"
                   value={form.name}
@@ -182,10 +183,10 @@ export default function NewMemberAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Age</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Age</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   type="number"
                   placeholder="Age in years"
                   value={form.age}
@@ -193,10 +194,10 @@ export default function NewMemberAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Gender</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Gender</label>
                 <select
-                  className="select w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   value={form.gender}
                   onChange={(e) => setForm({ ...form, gender: e.target.value })}
                 >
@@ -209,16 +210,17 @@ export default function NewMemberAdmin() {
           </div>
 
           {/* Physical Details Section */}
-          <div className="card p-6 md:p-8">
-            <h2 className="text-xl font-semibold text-white mb-6 pb-3 border-b border-zinc-800">
+          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Icon name="briefcase" className="w-5 h-5 text-purple-400" />
               Physical Details
             </h2>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Height (ft)</label>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Height (ft)</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   type="number"
                   step="0.1"
                   value={form.heightFt}
@@ -227,10 +229,10 @@ export default function NewMemberAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Height (in)</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Height (in)</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   type="number"
                   step="0.1"
                   value={form.heightIn}
@@ -239,10 +241,10 @@ export default function NewMemberAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Weight (kg)</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Weight (kg)</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   type="number"
                   step="0.1"
                   placeholder="Weight in kg"
@@ -251,10 +253,10 @@ export default function NewMemberAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">BMI</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">BMI</label>
                 <input 
-                  className="input w-full bg-zinc-900/50 cursor-not-allowed" 
+                  className="w-full px-4 py-2.5 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-400 placeholder-zinc-500 cursor-not-allowed" 
                   value={bmi ? bmi.toFixed(1) : ""} 
                   placeholder="Auto-calculated"
                   readOnly 
@@ -264,16 +266,17 @@ export default function NewMemberAdmin() {
           </div>
 
           {/* Membership Details Section */}
-          <div className="card p-6 md:p-8">
-            <h2 className="text-xl font-semibold text-white mb-6 pb-3 border-b border-zinc-800">
+          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Icon name="calendar" className="w-5 h-5 text-purple-400" />
               Membership Details
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Plan Type</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Plan Type</label>
                 <select
-                  className="select w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   value={form.planType}
                   onChange={(e) => setForm({ ...form, planType: e.target.value })}
                 >
@@ -283,10 +286,10 @@ export default function NewMemberAdmin() {
                 </select>
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Subscription Duration</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Subscription Duration</label>
                 <select
-                  className="select w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   value={form.subscriptionMonths}
                   onChange={(e) =>
                     setForm({ ...form, subscriptionMonths: e.target.value })
@@ -299,10 +302,10 @@ export default function NewMemberAdmin() {
                 </select>
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-zinc-400 text-sm font-medium">Start Date</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Start Date</label>
                 <input
-                  className="input w-full"
+                  className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                   type="date"
                   value={form.startDate}
                   onChange={(e) => setForm({ ...form, startDate: e.target.value })}
@@ -312,93 +315,90 @@ export default function NewMemberAdmin() {
           </div>
 
           {/* Member Photo Section */}
-          <div className="card p-6 md:p-8">
-            <h2 className="text-xl font-semibold text-white mb-6 pb-3 border-b border-zinc-800">
+          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Icon name="camera" className="w-5 h-5 text-purple-400" />
               Member Photo
             </h2>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Upload Photo Column */}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="block text-zinc-400 text-sm font-medium">Upload Photo</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Upload Photo</label>
+                <div className="relative">
                   <input
-                    className="input w-full cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-700 file:cursor-pointer"
+                    className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg text-white cursor-pointer file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-purple-600 file:text-white hover:file:bg-purple-700 file:cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
                     type="file"
                     accept="image/*"
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
                   />
-                  {file && (
-                    <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500 rounded-lg">
-                      <Icon name="check-circle" className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                      <p className="text-sm text-emerald-400 truncate">{file.name}</p>
-                    </div>
-                  )}
                 </div>
+                {file && (
+                  <div className="mt-3 flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/50 rounded-lg">
+                    <Icon name="check-circle" className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <p className="text-sm text-green-400 truncate">{file.name}</p>
+                  </div>
+                )}
               </div>
 
               {/* Camera Capture Column */}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="block text-zinc-400 text-sm font-medium">Or Capture Photo</label>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Or Capture Photo</label>
+                {!streaming ? (
+                  <button
+                    type="button"
+                    className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                    onClick={startCamera}
+                  >
+                    <Icon name="camera" className="w-5 h-5" />
+                    Start Camera
+                  </button>
+                ) : (
                   <div className="space-y-3">
-                    {!streaming ? (
-                      <button
-                        type="button"
-                        className="btn bg-zinc-800 hover:bg-zinc-700 w-full flex items-center justify-center gap-2 py-3"
-                        onClick={startCamera}
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      className="rounded-lg border-2 border-zinc-700 w-full aspect-video object-cover bg-black"
+                    />
+                    <div className="grid grid-cols-2 gap-3">
+                      <button 
+                        type="button" 
+                        className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2" 
+                        onClick={capture}
                       >
                         <Icon name="camera" className="w-4 h-4" />
-                        Start Camera
+                        Capture
                       </button>
-                    ) : (
-                      <>
-                        <video
-                          ref={videoRef}
-                          autoPlay
-                          playsInline
-                          className="rounded-lg border-2 border-zinc-700 w-full aspect-video object-cover bg-black"
-                        />
-                        <div className="grid grid-cols-2 gap-3">
-                          <button 
-                            type="button" 
-                            className="btn bg-rose-600 hover:bg-rose-700 flex items-center justify-center gap-2 py-3" 
-                            onClick={capture}
-                          >
-                            <Icon name="camera" className="w-4 h-4" />
-                            Capture
-                          </button>
-                          <button
-                            type="button"
-                            className="btn bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center gap-2 py-3"
-                            onClick={closeCamera}
-                          >
-                            <Icon name="x" className="w-4 h-4" />
-                            Close
-                          </button>
-                        </div>
-                      </>
-                    )}
-                    <canvas ref={canvasRef} className="hidden" />
+                      <button
+                        type="button"
+                        className="px-4 py-2.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                        onClick={closeCamera}
+                      >
+                        <Icon name="xmark" className="w-4 h-4" />
+                        Close
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
+                <canvas ref={canvasRef} className="hidden" />
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-end pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 justify-end pt-2">
             <button
               type="button"
               onClick={() => router.push("/admin/members")}
-              className="btn bg-zinc-800 hover:bg-zinc-700 px-8 py-3 order-2 sm:order-1"
+              className="px-6 py-2.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 text-white rounded-lg font-medium transition-colors order-2 sm:order-1"
             >
               Cancel
             </button>
             <button 
               type="submit"
               disabled={loading}
-              className="btn bg-rose-600 hover:bg-rose-700 px-8 py-3 shadow-lg shadow-rose-900/20 flex items-center justify-center gap-2 order-1 sm:order-2"
+              className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:bg-zinc-700 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2 order-1 sm:order-2 shadow-lg shadow-rose-900/30"
             >
               {loading ? (
                 <>
