@@ -7,20 +7,36 @@ import Icon from "@/app/components/Icon";
 import { useNavBar } from "@/app/components/NavBarContext";
 
 export default function NavBar() {
+  const pathname = usePathname();
+  
+  // CRITICAL: Check pathname FIRST before loading session
+  // Member pages have their own MemberLayout and should NEVER see this navbar
+  const isMemberPage = pathname?.startsWith("/member") || 
+                       pathname?.startsWith("/profile") || 
+                       pathname?.startsWith("/attendance") || 
+                       pathname?.startsWith("/payments") || 
+                       pathname?.startsWith("/membership");
+  
+  // Early return for member pages - don't even load session
+  if (isMemberPage) return null;
+  
   const { data: session } = useSession();
   const { collapsed, setCollapsed, isMobile } = useNavBar();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const pathname = usePathname();
 
-  // Check if the user is on a protected page
+  // Get user role from session
+  const userRole = session?.user?.role;
+  
+  // Check if the user is on a protected admin/staff page
   const isProtectedPage = pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin");
   
   // Don't show sidebar on public pages
   if (!isProtectedPage) return null;
 
-  // All authenticated users are admins
-  const dashboardLink = "/admin";
-  const isAdmin = true;
+  // Determine dashboard link based on role
+  const dashboardLink = userRole === "admin" ? "/admin" : "/dashboard";
+  const isAdmin = userRole === "admin";
+  const isStaff = userRole === "staff";
 
   // Determine if a link is active
   const isActive = (path) => {
@@ -28,13 +44,17 @@ export default function NavBar() {
     return pathname?.startsWith(path) && path !== dashboardLink;
   };
 
-  // Navigation items for admin
-  const navItems = [
+  // Navigation items based on role
+  const navItems = isAdmin ? [
     { name: "Dashboard", path: "/admin", icon: "grid" },
     { name: "Members", path: "/admin/members", icon: "users" },
     { name: "Trainers", path: "/admin/staff", icon: "briefcase" },
     { name: "Reports", path: "/admin/reports", icon: "bar-chart-2" },
     { name: "Settings", path: "/admin/settings", icon: "settings" }
+  ] : [
+    { name: "Dashboard", path: "/dashboard", icon: "grid" },
+    { name: "Members", path: "/dashboard/members", icon: "users" },
+    { name: "Reports", path: "/dashboard/reports", icon: "bar-chart-2" }
   ];
   
   // Mobile sidebar overlay
@@ -138,8 +158,8 @@ export default function NavBar() {
                   <p className="text-sm font-medium text-white truncate">
                     {session.user.name || session.user.email.split('@')[0]}
                   </p>
-                  <p className="text-xs text-zinc-500 truncate">
-                    Administrator
+                  <p className="text-xs text-zinc-500 truncate capitalize">
+                    {userRole || 'User'}
                   </p>
                 </div>
               )}

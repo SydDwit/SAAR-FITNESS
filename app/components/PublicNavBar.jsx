@@ -6,18 +6,42 @@ import { usePathname } from "next/navigation";
 import Icon from "@/app/components/Icon";
 
 export default function PublicNavBar() {
-  const { data: session } = useSession();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   
-  // Check if the user is on a protected page
-  const isProtectedPage = pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin");
+  // CRITICAL: Check pathname FIRST - member pages have their own navigation
+  const isMemberPage = pathname?.startsWith("/member") || 
+                       pathname?.startsWith("/profile") || 
+                       pathname?.startsWith("/attendance") || 
+                       pathname?.startsWith("/payments") || 
+                       pathname?.startsWith("/membership");
+  
+  const isProtectedPage = pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin") || isMemberPage;
   
   // Don't show public navbar on protected pages
   if (isProtectedPage) return null;
+  
+  const { data: session } = useSession();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // Get user role from session
+  const userRole = session?.user?.role;
 
-  // All authenticated users go to admin dashboard
-  const dashboardLink = "/admin";
+  // Route users to appropriate dashboard based on role
+  const getDashboardLink = () => {
+    if (!session) return "/login";
+    switch (userRole) {
+      case "admin":
+        return "/admin";
+      case "staff":
+        return "/dashboard";
+      case "member":
+        return "/member";
+      default:
+        return "/login";
+    }
+  };
+  
+  const dashboardLink = getDashboardLink();
   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-zinc-900">
@@ -39,7 +63,7 @@ export default function PublicNavBar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
             <Link 
-              href="/#home" 
+              href="/" 
               className="text-zinc-300 hover:text-white transition-colors"
             >
               Home
@@ -80,7 +104,7 @@ export default function PublicNavBar() {
         {mobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 space-y-2">
             <Link 
-              href="/#home" 
+              href="/" 
               className="block py-2 text-zinc-300 hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

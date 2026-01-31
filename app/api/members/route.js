@@ -1,11 +1,19 @@
 import { Member } from "@/lib/models";
 import { memberConn } from "@/lib/db";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireStaffOrAdmin } from "@/lib/rbac";
 import { writeFile } from "fs/promises";
 import path from "path";
 
 export async function GET(req) {
+  // Verify authorization
+  const authCheck = await requireStaffOrAdmin();
+  if (!authCheck.authorized) {
+    return new Response(JSON.stringify({ error: authCheck.error }), {
+      status: authCheck.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
   await memberConn;
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q") || "";
@@ -16,8 +24,15 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const session = await getServerSession(authOptions);
-  if (!session) return new Response("Unauthorized", { status: 401 });
+  // Verify authorization
+  const authCheck = await requireStaffOrAdmin();
+  if (!authCheck.authorized) {
+    return new Response(JSON.stringify({ error: authCheck.error }), {
+      status: authCheck.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
   try {
     const form = await req.formData();
     const name = form.get("name");
@@ -49,7 +64,8 @@ export async function POST(req) {
     const saved = await Member.create({
       name, age, gender, planType, heightCm, weightKg, bmi, subscriptionMonths, startDate, endDate, status: "active",
       paymentStatus,
-      photoUrl
+      photoUrl,
+      createdById: authCheck.session.user.id
     });
 
     return Response.json({ ok: true, id: saved._id });
@@ -60,6 +76,15 @@ export async function POST(req) {
 }
 
 export async function PATCH(req){
+  // Verify authorization
+  const authCheck = await requireStaffOrAdmin();
+  if (!authCheck.authorized) {
+    return new Response(JSON.stringify({ error: authCheck.error }), {
+      status: authCheck.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
   await memberConn;
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
@@ -95,6 +120,15 @@ export async function PATCH(req){
 }
 
 export async function DELETE(req){
+  // Verify authorization - Only admins can delete
+  const authCheck = await requireStaffOrAdmin();
+  if (!authCheck.authorized) {
+    return new Response(JSON.stringify({ error: authCheck.error }), {
+      status: authCheck.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
   if (!id) return Response.json({ ok:false, error:"missing id" }, { status: 400 });

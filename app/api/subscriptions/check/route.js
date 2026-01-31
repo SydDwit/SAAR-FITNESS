@@ -1,7 +1,17 @@
 import { Member, Staff } from "@/lib/models";
 import { getTransport } from "@/lib/mail";
+import { requireStaffOrAdmin } from "@/lib/rbac";
 
 export async function POST(){
+  // Verify authorization - staff or admin can check subscriptions
+  const authCheck = await requireStaffOrAdmin();
+  if (!authCheck.authorized) {
+    return new Response(JSON.stringify({ error: authCheck.error }), {
+      status: authCheck.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  
   const now = new Date();
   const expired = await Member.find({ endDate: { $lt: now }, status: { $ne: "expired" } }).lean();
   if (expired.length) {
