@@ -1,6 +1,7 @@
 import "./globals.css";
 import AuthProvider from "./components/AuthProvider";
 import ClientLayout from "./components/ClientLayout";
+import { ThemeProvider } from "./components/ThemeProvider";
 import "./utils/fontAwesomeConfig";
 
 export const metadata = {
@@ -10,11 +11,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-black text-white">
-        <AuthProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </AuthProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors">
+        <ThemeProvider>
+          <AuthProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

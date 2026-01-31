@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import MemberAuthProvider from "./MemberAuthProvider";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function MemberLayoutContent({ children }) {
   const { data: session } = useSession();
@@ -22,9 +23,9 @@ function MemberLayoutContent({ children }) {
   const isActive = (href) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Top Navigation Bar */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -32,7 +33,7 @@ function MemberLayoutContent({ children }) {
                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">SF</span>
                 </div>
-                <span className="ml-2 text-xl font-bold text-gray-900">
+                <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                   SAAR FITNESS
                 </span>
               </div>
@@ -46,8 +47,8 @@ function MemberLayoutContent({ children }) {
                   href={item.href}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? "bg-indigo-50 text-indigo-600"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400"
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
                 >
                   <span className="mr-1">{item.icon}</span>
@@ -58,16 +59,17 @@ function MemberLayoutContent({ children }) {
 
             {/* User Menu */}
             <div className="flex items-center space-x-4">
+              <ThemeSwitcher />
               <div className="hidden md:flex items-center space-x-3">
                 <div className="text-right">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
                     {session?.user?.name}
                   </p>
-                  <p className="text-xs text-gray-500">{session?.user?.email}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{session?.user?.email}</p>
                 </div>
                 <button
                   onClick={() => signOut({ callbackUrl: "/login" })}
-                  className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
                 >
                   Sign Out
                 </button>
@@ -76,7 +78,7 @@ function MemberLayoutContent({ children }) {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <svg
                   className="h-6 w-6"

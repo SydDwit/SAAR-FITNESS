@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/admin/login" || pathname === "/login";
 
   return (
     <NavBarProvider>
